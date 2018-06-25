@@ -1,0 +1,5 @@
+jdbc.driverLocation=C:/ceshi/mysql.jar
+jdbc.driverClass=com.mysql.jdbc.Driver
+jdbc.connectionURL=jdbc:sqlserver://localhost:1433;DatabaseName=jesper
+jdbc.userId=root
+jdbc.password=1234

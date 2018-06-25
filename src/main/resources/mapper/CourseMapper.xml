@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jesper.mapper.CourseMapper">
+    <resultMap id="BaseResultMap" type="com.jesper.model.Course">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="addDate" property="addDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from course
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+
+
+
+    <insert id="insert" parameterType="com.jesper.model.Course">
+    insert into course ( id,title, author, url,addDate)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR},#{addDate,jdbcType=TIMESTAMP})
+  </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.jesper.model.Course">
+    update course
+    set title = #{title,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+    select id, title, author, url,addDate
+    from course
+    where id = #{id}
+  </select>
+
+   <select id="count" resultType="java.lang.Integer" parameterType="com.jesper.model.Course">
+      SELECT count(*) from course
+      <if test="title != null">
+          where title LIKE concat('%', #{title, jdbcType=VARCHAR}, '%')
+      </if>
+  </select>
+   <select id="list" resultMap="BaseResultMap" parameterType="com.jesper.model.Course">
+        SELECT * FROM course 
+        <if test="title != null">
+            where title LIKE concat('%', #{title, jdbcType=VARCHAR}, '%')
+        </if>
+        ORDER BY addDate desc
+        limit #{start, jdbcType=INTEGER},#{end, jdbcType=INTEGER}
+    </select>
+
+</mapper>
